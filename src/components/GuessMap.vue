@@ -35,7 +35,7 @@ onMounted(() => {
   })
 
   L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a>',
   }).addTo(map)
 
   map.on('click', (e: L.LeafletMouseEvent) => {
@@ -128,5 +128,9 @@ defineExpose({ clearGuess, toggleCollapse, collapsed })
 .map-container {
   width: 100%;
   height: calc(100% - 36px);
+}
+
+.map-container :deep(.leaflet-control-attribution a) {
+  pointer-events: none;
 }
 </style>

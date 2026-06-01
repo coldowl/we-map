@@ -217,6 +217,10 @@ h2 {
   overflow: hidden;
 }
 
+.result-map :deep(.leaflet-control-attribution a) {
+  pointer-events: none;
+}
+
 .result-info {
   display: flex;
   justify-content: center;

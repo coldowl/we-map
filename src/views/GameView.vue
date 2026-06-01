@@ -269,6 +269,15 @@ async function handleNewGame() {
     }
   }
 
+  // 标准模式：直接开始新游戏，跳过过渡页
+  const settings = await getSettings()
+  const count = settings.roundsCount
+  const questions = await getRandomQuestions(count)
+  if (questions.length >= count) {
+    gameStore.startNewGame(questions, 'standard')
+    return
+  }
+
   gameStore.resetGame()
   isGameStarted.value = false
 }

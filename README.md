@@ -1,6 +1,10 @@
 # We-Map
 
-街景猜谜桌面游戏 — 基于 Mapillary 街景和 OpenStreetMap，在全球 73 个城市中猜测你的位置。
+<p align="center">
+  <img src="public/vite.svg" width="120" alt="We-Map Logo" />
+</p>
+
+街景猜谜桌面游戏 — 基于 Mapillary 街景和 OpenStreetMap，在全球 88 个城市中猜测你的位置。
 
 ## 功能
 
@@ -11,7 +15,9 @@
   - 标准模式：完成固定轮数，争取最高总分
   - 生存模式：每轮需达到阈值分数才能继续
 - **统计系统** — 追踪游戏历史、最佳分数、单轮最高分、平均距离等
-- **题库管理** — 支持 JSON / CSV 格式导入自定义题库
+- **题库管理** — 支持 JSON / CSV 格式导入，也可通过 Mapillary API 自动获取
+- **明暗主题** — 支持明亮 / 暗黑模式切换，偏好自动持久化
+- **系统托盘** — 最小化到托盘，支持置顶窗口、快速显示/隐藏
 - **多语言** — 支持中文和英文
 
 ## 技术栈
@@ -45,9 +51,7 @@ npm install
 ### 开发模式
 
 ```bash
-npm run dev          # 启动前端 (Vite)
-# 另一个终端
-cargo tauri dev      # 启动 Tauri 桌面应用
+npx tauri dev        # 同时启动前端和桌面应用
 ```
 
 ### 构建
@@ -58,15 +62,19 @@ cargo tauri build    # 构建安装包
 
 ## 题库准备
 
-### 方式一：使用脚本抓取
+### 方式一：应用内自动获取
+
+在设置页面中填入 Mapillary Client Token，点击"自动获取"即可从全球 88 个城市采样导入题目。
+
+### 方式二：使用脚本抓取
 
 ```bash
 node scripts/fetch-questions.js --token "MLY|你的Mapillary令牌" --count 500 --output questions.json
 ```
 
-脚本从全球 73 个城市均匀采样，自动过滤距离过近的图片（最小间距 5km）。
+脚本从全球 88 个城市均匀采样，自动过滤距离过近的图片（最小间距 5km）。
 
-### 方式二：手动导入
+### 方式三：手动导入
 
 在应用的设置页面中，通过 JSON 或 CSV 格式导入题库数据。
 
@@ -93,6 +101,8 @@ image_id,latitude,longitude
 
 ```
 we-map/
+├── public/
+│   └── vite.svg           # 应用图标（指南针）
 ├── scripts/               # 工具脚本
 │   └── fetch-questions.js # 题库抓取
 ├── src/
@@ -105,12 +115,17 @@ we-map/
 │   ├── utils/             # 工具函数
 │   └── views/             # 页面视图
 ├── src-tauri/
+│   ├── icons/             # 各平台应用图标（由 vite.svg 生成）
 │   └── src/
 │       ├── commands.rs    # Tauri 命令
 │       ├── scoring.rs     # 距离计算与评分算法
-│       └── lib.rs         # 应用入口
+│       └── lib.rs         # 应用入口 + 系统托盘
 └── package.json
 ```
+
+## 图标
+
+应用图标为指南针设计，深色圆形底色上绘制方位指针，象征街景探索中的定位与导航。图标文件位于 `public/vite.svg`，桌面应用各尺寸图标由 `npx tauri icon public/vite.svg` 自动生成。
 
 ## 许可证
 

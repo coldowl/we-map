@@ -107,6 +107,8 @@
         </router-link>
       </div>
     </div>
+
+    <Modal v-model="showModal" :message="modalMessage" />
   </div>
 </template>
 
@@ -117,12 +119,15 @@ import { useI18n } from 'vue-i18n'
 import { useGameStore } from '../stores/game'
 import { getRandomQuestions, getQuestionCount } from '../services/questionBank'
 import { getSettings } from '../services/settings'
+import Modal from '../components/Modal.vue'
 
 const router = useRouter()
 const { t } = useI18n()
 const gameStore = useGameStore()
 const questionCount = ref(0)
 const dbReady = ref(false)
+const showModal = ref(false)
+const modalMessage = ref('')
 const roundsCount = ref(5)
 const survivalThreshold = ref(2000)
 
@@ -148,7 +153,8 @@ async function startGame(mode: 'standard' | 'survival') {
     const count = roundsCount.value
     const questions = await getRandomQuestions(count)
     if (questions.length < count) {
-      alert(t('menu.notEnoughQuestions', { count }))
+      modalMessage.value = t('menu.notEnoughQuestions', { count })
+      showModal.value = true
       return
     }
     gameStore.survivalThreshold = survivalThreshold.value
@@ -156,7 +162,8 @@ async function startGame(mode: 'standard' | 'survival') {
     router.push('/game')
   } catch (err) {
     console.error('Failed to start game:', err)
-    alert(t('menu.loadFailed'))
+    modalMessage.value = t('menu.loadFailed')
+    showModal.value = true
   }
 }
 </script>

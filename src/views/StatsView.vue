@@ -58,6 +58,7 @@
       </table>
     </div>
 
+    <Modal v-model="showClearModal" :message="t('stats.clearConfirm')" :show-cancel="true" @confirm="doClear" />
   </div>
 </template>
 
@@ -65,6 +66,7 @@
 import { ref, onMounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { getPlayerStats, getGameHistory, clearAllHistory, type PlayerStats, type GameHistoryEntry } from '../services/gameHistory'
+import Modal from '../components/Modal.vue'
 
 const { t } = useI18n()
 
@@ -78,6 +80,7 @@ const stats = ref<PlayerStats>({
 })
 
 const history = ref<GameHistoryEntry[]>([])
+const showClearModal = ref(false)
 
 onMounted(async () => {
   try {
@@ -97,7 +100,10 @@ function formatDate(dateStr: string): string {
 }
 
 async function handleClear() {
-  if (!confirm(t('stats.clearConfirm'))) return
+  showClearModal.value = true
+}
+
+async function doClear() {
   try {
     await clearAllHistory()
     stats.value = { totalGames: 0, bestScore: 0, avgScore: 0, totalRounds: 0, avgDistance: 0, bestRoundScore: 0 }

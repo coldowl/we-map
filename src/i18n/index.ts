@@ -102,6 +102,10 @@ const messages = {
       pin: '钉住窗口',
       unpin: '取消钉住',
     },
+    modal: {
+      confirm: '确定',
+      cancel: '取消',
+    },
   },
   en: {
     app: {
@@ -203,6 +207,10 @@ const messages = {
     titlebar: {
       pin: 'Pin Window',
       unpin: 'Unpin',
+    },
+    modal: {
+      confirm: 'OK',
+      cancel: 'Cancel',
     },
   },
 }

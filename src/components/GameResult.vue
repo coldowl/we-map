@@ -182,7 +182,9 @@ onUnmounted(() => {
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: rgba(0, 0, 0, 0.6);
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -190,18 +192,22 @@ onUnmounted(() => {
 }
 
 .result-card {
-  background: #fff;
-  border-radius: 12px;
-  padding: 24px;
+  background: #1a2a3a;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 28px;
   width: 600px;
   max-width: 90vw;
   max-height: 90vh;
   overflow-y: auto;
+  color: #fff;
 }
 
 h2 {
   margin: 0 0 16px;
   text-align: center;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
 }
 
 .result-details {
@@ -215,6 +221,7 @@ h2 {
   height: 250px;
   border-radius: 8px;
   overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .result-map :deep(.leaflet-control-attribution a) {
@@ -225,6 +232,8 @@ h2 {
   display: flex;
   justify-content: center;
   gap: 32px;
+  padding-top: 8px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .stat {
@@ -234,7 +243,7 @@ h2 {
 .label {
   display: block;
   font-size: 0.85rem;
-  color: #888;
+  color: rgba(255, 255, 255, 0.45);
   margin-bottom: 4px;
 }
 
@@ -245,10 +254,18 @@ h2 {
 
 .score {
   color: #e67e22;
+  text-shadow: 0 0 20px rgba(230, 126, 34, 0.35);
 }
 
 .total {
   color: #2ecc71;
+  font-size: 1.8rem;
+  animation: scaleUp 0.4s ease-out;
+}
+
+@keyframes scaleUp {
+  0% { transform: scale(0.6); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
 }
 
 .actions {
@@ -261,14 +278,32 @@ h2 {
 button {
   padding: 10px 24px;
   font-size: 1rem;
-  border: 1px solid #ccc;
+  border: none;
   border-radius: 8px;
-  background: #fff;
   cursor: pointer;
+  font-weight: 600;
+  transition: box-shadow 0.25s, transform 0.15s;
 }
 
-button:hover {
-  background: #f0f0f0;
+.actions button:first-child {
+  background: linear-gradient(135deg, #e67e22, #f39c12);
+  color: #fff;
+}
+
+.actions button:first-child:hover {
+  box-shadow: 0 0 20px rgba(230, 126, 34, 0.45);
+  transform: translateY(-1px);
+}
+
+.actions button:last-child {
+  background: transparent;
+  color: rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.actions button:last-child:hover {
+  border-color: rgba(255, 255, 255, 0.35);
+  color: rgba(255, 255, 255, 0.9);
 }
 
 a {

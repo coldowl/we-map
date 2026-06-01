@@ -1,17 +1,22 @@
 <template>
   <div class="game-view" @keydown="handleKeydown" tabindex="0" ref="gameViewRef">
     <div v-if="!isGameStarted" class="start-screen">
-      <h2>{{ t('game.ready') }}</h2>
-      <p>{{ gameStore.gameMode === 'survival' ? t('menu.survival') : t('menu.standard') }} - {{ gameStore.questions.length }} {{ t('game.round') }}</p>
-      <button @click="startGame">{{ t('game.start') }}</button>
-      <router-link to="/">{{ t('game.back') }}</router-link>
+      <div class="start-card">
+        <h1 class="game-title">We-Map</h1>
+        <h2>{{ gameStore.gameMode === 'survival' ? t('menu.survival') : t('menu.standard') }}</h2>
+        <p class="round-info">{{ gameStore.questions.length }} {{ t('game.round') }}</p>
+        <button class="start-btn" @click="startGame">{{ t('game.start') }}</button>
+        <router-link to="/" class="back-link-ghost">{{ t('game.back') }}</router-link>
+      </div>
     </div>
 
     <template v-else>
       <div class="hud">
-        <span>{{ t('game.round') }}: {{ gameStore.currentRound + 1 }} / {{ gameStore.gameMode === 'survival' ? '∞' : gameStore.questions.length }}</span>
-        <span>{{ t('game.totalScore') }}: {{ gameStore.totalScore }}</span>
-        <span v-if="timedMode" :class="{ 'time-warning': timeLeft <= 10 }">⏱ {{ timeLeft }}s</span>
+        <span class="hud-segment"><span class="hud-icon">◉</span> {{ t('game.round') }}: {{ gameStore.currentRound + 1 }} / {{ gameStore.gameMode === 'survival' ? '∞' : gameStore.questions.length }}</span>
+        <span class="hud-divider"></span>
+        <span class="hud-segment"><span class="hud-icon">★</span> {{ t('game.totalScore') }}: <span class="hud-score">{{ gameStore.totalScore }}</span></span>
+        <span v-if="timedMode" class="hud-divider"></span>
+        <span v-if="timedMode" class="hud-segment" :class="{ 'time-warning': timeLeft <= 10 }"><span class="hud-icon">◷</span> {{ timeLeft }}s</span>
       </div>
 
       <div class="street-view-container">
@@ -33,9 +38,9 @@
 
       <GuessMap ref="guessMapRef" @guess-placed="onGuessPlaced" />
 
-      <div v-if="submitting" class="submit-hint">{{ t('game.calculating') }}</div>
+      <div v-if="submitting" class="submit-hint"><span class="calculating-dots">{{ t('game.calculating') }}</span></div>
       <div v-else-if="hasGuess && gameStore.phase === 'playing'" class="submit-hint">
-        {{ t('game.submit') }}
+        <span class="submit-bounce">{{ t('game.submit') }}</span>
       </div>
 
       <router-link to="/" class="back-link">{{ t('game.back') }}</router-link>
@@ -292,53 +297,142 @@ async function handleNewGame() {
   outline: none;
 }
 
+/* ── Start Screen ── */
 .start-screen {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   height: 100%;
-  gap: 16px;
-  background: #f5f5f5;
+  background: linear-gradient(145deg, #0f1923 0%, #1a2a3a 100%);
+  position: relative;
 }
 
-.start-screen h2 {
+.start-screen::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(52, 152, 219, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(52, 152, 219, 0.05) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none;
+}
+
+.start-card {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 40px 48px;
+}
+
+.game-title {
   margin: 0;
+  font-size: 2.8rem;
+  font-weight: 800;
+  letter-spacing: 2px;
+  color: #fff;
+  text-shadow: 0 0 30px rgba(230, 126, 34, 0.4), 0 0 60px rgba(230, 126, 34, 0.15);
 }
 
-.start-screen button {
-  padding: 12px 32px;
+.start-card h2 {
+  margin: 0;
+  font-size: 1.2rem;
+  color: rgba(255, 255, 255, 0.7);
+  font-weight: 400;
+}
+
+.round-info {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.45);
+  font-size: 0.9rem;
+}
+
+.start-btn {
+  margin-top: 8px;
+  padding: 14px 48px;
   font-size: 1.1rem;
-  border: 1px solid #ccc;
+  font-weight: 600;
+  border: none;
   border-radius: 8px;
-  background: #fff;
+  background: linear-gradient(135deg, #e67e22, #f39c12);
+  color: #fff;
   cursor: pointer;
+  transition: box-shadow 0.25s, transform 0.15s;
 }
 
-.start-screen button:hover {
-  background: #e0e0e0;
+.start-btn:hover {
+  box-shadow: 0 0 20px rgba(230, 126, 34, 0.45);
+  transform: translateY(-1px);
 }
 
-.start-screen a {
-  color: #888;
+.back-link-ghost {
+  color: rgba(255, 255, 255, 0.5);
   text-decoration: none;
+  font-size: 0.9rem;
+  padding: 8px 24px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 20px;
+  transition: border-color 0.2s, color 0.2s;
 }
 
+.back-link-ghost:hover {
+  border-color: rgba(255, 255, 255, 0.35);
+  color: rgba(255, 255, 255, 0.8);
+}
+
+/* ── HUD ── */
 .hud {
   position: absolute;
   top: 12px;
   left: 50%;
   transform: translateX(-50%);
-  background: rgba(0, 0, 0, 0.7);
+  background: rgba(15, 25, 35, 0.65);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   color: #fff;
   padding: 8px 20px;
   border-radius: 20px;
   font-size: 0.9rem;
   z-index: 10;
   display: flex;
-  gap: 24px;
+  align-items: center;
+  gap: 0;
 }
 
+.hud-segment {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 14px;
+}
+
+.hud-divider {
+  width: 1px;
+  height: 16px;
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.hud-icon {
+  font-size: 0.8rem;
+  opacity: 0.6;
+}
+
+.hud-score {
+  color: #e67e22;
+  font-weight: 700;
+}
+
+/* ── Street View Container ── */
 .street-view-container {
   width: 100%;
   height: 100%;
@@ -354,28 +448,38 @@ async function handleNewGame() {
   color: #ccc;
 }
 
+/* ── Back Link (in-game) ── */
 .back-link {
   position: absolute;
   top: 12px;
   left: 12px;
   color: #fff;
-  background: rgba(0, 0, 0, 0.5);
-  padding: 8px 16px;
-  border-radius: 4px;
+  background: rgba(15, 25, 35, 0.65);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 8px 18px;
+  border-radius: 20px;
   text-decoration: none;
   z-index: 10;
+  font-size: 0.85rem;
+  transition: background 0.2s;
 }
 
 .back-link:hover {
-  background: rgba(0, 0, 0, 0.7);
+  background: rgba(15, 25, 35, 0.85);
 }
 
+/* ── Submit Hint ── */
 .submit-hint {
   position: absolute;
   bottom: 16px;
   left: 50%;
   transform: translateX(-50%);
-  background: rgba(0, 0, 0, 0.75);
+  background: rgba(15, 25, 35, 0.65);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   color: #fff;
   padding: 8px 20px;
   border-radius: 20px;
@@ -383,15 +487,38 @@ async function handleNewGame() {
   z-index: 20;
 }
 
+.calculating-dots::after {
+  content: '';
+  animation: dots 1.4s steps(4, end) infinite;
+}
+
+@keyframes dots {
+  0%   { content: ''; }
+  25%  { content: '.'; }
+  50%  { content: '..'; }
+  75%  { content: '...'; }
+  100% { content: ''; }
+}
+
+.submit-bounce {
+  display: inline-block;
+  animation: bounce 1.6s ease-in-out infinite;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
+}
+
+/* ── Timer Warning ── */
 .time-warning {
   color: #e74c3c;
   font-weight: bold;
-  animation: shake 0.4s ease-in-out infinite;
+  animation: pulse 1s ease-in-out infinite;
 }
 
-@keyframes shake {
-  0%, 100% { transform: translateX(0); }
-  25% { transform: translateX(-2px); }
-  75% { transform: translateX(2px); }
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
 }
 </style>

@@ -20,6 +20,13 @@ body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+input, textarea {
+  -webkit-user-select: text;
+  user-select: text;
 }
 
 #app {

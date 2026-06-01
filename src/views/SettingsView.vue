@@ -25,6 +25,7 @@ const { t } = useI18n()
 .settings-view {
   display: flex;
   height: 100vh;
+  background: var(--bg-page);
 }
 
 .settings-content {
@@ -35,26 +36,27 @@ const { t } = useI18n()
 
 h2 {
   margin: 0 0 20px;
+  color: var(--text-primary);
 }
 
 .question-bank-panel {
   width: 400px;
-  border-left: 1px solid #ddd;
+  border-left: 1px solid var(--border);
   overflow-y: auto;
-  background: #fafafa;
+  background: var(--bg-surface);
 }
 
 .back-link {
   display: inline-block;
   margin-bottom: 12px;
-  color: #333;
-  background: rgba(0, 0, 0, 0.05);
+  color: var(--text-primary);
+  background: rgba(128, 128, 128, 0.1);
   padding: 8px 16px;
   border-radius: 4px;
   text-decoration: none;
 }
 
 .back-link:hover {
-  background: rgba(0, 0, 0, 0.1);
+  background: rgba(128, 128, 128, 0.18);
 }
 </style>

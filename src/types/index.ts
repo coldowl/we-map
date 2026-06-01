@@ -35,6 +35,7 @@ export interface GameResult {
 
 export interface GameSettings {
   language: 'zh' | 'en'
+  theme: 'light' | 'dark'
   streetViewMove: boolean
   timedMode: boolean
   timeLimitSeconds: number

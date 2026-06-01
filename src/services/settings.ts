@@ -5,6 +5,7 @@ const store = new LazyStore('settings.json')
 
 const DEFAULT_SETTINGS: GameSettings = {
   language: 'zh',
+  theme: 'light',
   streetViewMove: true,
   timedMode: false,
   timeLimitSeconds: 60,

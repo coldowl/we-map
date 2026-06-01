@@ -1,6 +1,20 @@
 <template>
   <div class="game-settings">
     <div class="setting-item">
+      <label>{{ t('settings.theme') }}</label>
+      <div class="theme-toggle">
+        <button
+          :class="{ active: localSettings.theme === 'light' }"
+          @click="setTheme('light')"
+        >{{ t('settings.light') }}</button>
+        <button
+          :class="{ active: localSettings.theme === 'dark' }"
+          @click="setTheme('dark')"
+        >{{ t('settings.dark') }}</button>
+      </div>
+    </div>
+
+    <div class="setting-item">
       <label>{{ t('settings.language') }}</label>
       <select v-model="localSettings.language" @change="onLanguageChange">
         <option value="zh">{{ t('settings.chinese') }}</option>
@@ -50,6 +64,7 @@ const { t, locale } = useI18n()
 
 const localSettings = reactive<GameSettings>({
   language: 'zh',
+  theme: 'light',
   streetViewMove: true,
   timedMode: false,
   timeLimitSeconds: 60,
@@ -63,7 +78,14 @@ onMounted(async () => {
   const settings = await getSettings()
   Object.assign(localSettings, settings)
   locale.value = settings.language
+  document.documentElement.dataset.theme = settings.theme
 })
+
+function setTheme(theme: 'light' | 'dark') {
+  localSettings.theme = theme
+  document.documentElement.dataset.theme = theme
+  save()
+}
 
 function onLanguageChange() {
   locale.value = localSettings.language
@@ -90,14 +112,17 @@ async function save() {
 
 .setting-item label {
   font-size: 0.9rem;
+  color: var(--text-primary);
 }
 
 .setting-item input[type='text'],
 .setting-item input[type='number'] {
   width: 200px;
   padding: 6px 8px;
-  border: 1px solid #ccc;
+  border: 1px solid var(--border);
   border-radius: 4px;
+  background: var(--bg-input);
+  color: var(--text-primary);
 }
 
 .setting-item input[type='checkbox'] {
@@ -107,7 +132,40 @@ async function save() {
 
 select {
   padding: 6px 8px;
-  border: 1px solid #ccc;
+  border: 1px solid var(--border);
   border-radius: 4px;
+  background: var(--bg-input);
+  color: var(--text-primary);
+}
+
+.theme-toggle {
+  display: flex;
+  gap: 0;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.theme-toggle button {
+  padding: 6px 16px;
+  border: none;
+  background: var(--bg-surface);
+  color: var(--text-secondary);
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: background 0.2s, color 0.2s;
+}
+
+.theme-toggle button:first-child {
+  border-right: 1px solid var(--border);
+}
+
+.theme-toggle button.active {
+  background: var(--accent);
+  color: #fff;
+}
+
+.theme-toggle button:hover:not(.active) {
+  background: var(--bg-elevated);
 }
 </style>

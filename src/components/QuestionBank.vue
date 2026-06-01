@@ -160,6 +160,7 @@ async function handleFetch() {
 
 h3 {
   margin: 0 0 12px;
+  color: var(--text-primary);
 }
 
 .info {
@@ -167,6 +168,7 @@ h3 {
   align-items: center;
   gap: 12px;
   margin-bottom: 20px;
+  color: var(--text-primary);
 }
 
 .refresh-btn {
@@ -176,6 +178,7 @@ h3 {
 
 .import-section h4 {
   margin: 0 0 8px;
+  color: var(--text-primary);
 }
 
 .import-tabs {
@@ -186,27 +189,30 @@ h3 {
 
 .import-tabs button {
   padding: 6px 16px;
-  border: 1px solid #ccc;
-  background: #fff;
+  border: 1px solid var(--border);
+  background: var(--bg-surface);
+  color: var(--text-primary);
   cursor: pointer;
   border-radius: 4px;
 }
 
 .import-tabs button.active {
-  background: #3498db;
+  background: var(--info);
   color: #fff;
-  border-color: #3498db;
+  border-color: var(--info);
 }
 
 textarea {
   width: 100%;
   padding: 8px;
-  border: 1px solid #ccc;
+  border: 1px solid var(--border);
   border-radius: 4px;
   font-family: monospace;
   font-size: 0.85rem;
   resize: vertical;
   box-sizing: border-box;
+  background: var(--bg-input);
+  color: var(--text-primary);
 }
 
 .import-actions {
@@ -218,16 +224,17 @@ textarea {
 .import-actions button,
 .file-btn {
   padding: 8px 16px;
-  border: 1px solid #ccc;
+  border: 1px solid var(--border);
   border-radius: 4px;
-  background: #fff;
+  background: var(--bg-surface);
+  color: var(--text-primary);
   cursor: pointer;
   font-size: 0.9rem;
 }
 
 .import-actions button:hover,
 .file-btn:hover {
-  background: #f0f0f0;
+  background: var(--bg-elevated);
 }
 
 .import-actions button:disabled {
@@ -236,27 +243,28 @@ textarea {
 }
 
 .success {
-  color: #27ae60;
+  color: var(--success);
   margin: 8px 0 0;
 }
 
 .error {
-  color: #e74c3c;
+  color: var(--danger);
   margin: 8px 0 0;
 }
 
 .fetch-section {
   margin-bottom: 20px;
   padding-bottom: 20px;
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid var(--border-light);
 }
 
 .fetch-section h4 {
   margin: 0 0 4px;
+  color: var(--text-primary);
 }
 
 .fetch-desc {
-  color: #888;
+  color: var(--text-tertiary);
   font-size: 0.8rem;
   margin: 0 0 12px;
 }
@@ -270,20 +278,23 @@ textarea {
 .fetch-controls label {
   font-size: 0.85rem;
   white-space: nowrap;
+  color: var(--text-primary);
 }
 
 .fetch-controls input[type='number'] {
   width: 80px;
   padding: 6px 8px;
-  border: 1px solid #ccc;
+  border: 1px solid var(--border);
   border-radius: 4px;
+  background: var(--bg-input);
+  color: var(--text-primary);
 }
 
 .fetch-controls button {
   padding: 8px 16px;
-  border: 1px solid #3498db;
+  border: 1px solid var(--info);
   border-radius: 4px;
-  background: #3498db;
+  background: var(--info);
   color: #fff;
   cursor: pointer;
   font-size: 0.9rem;
@@ -291,7 +302,7 @@ textarea {
 }
 
 .fetch-controls button:hover:not(:disabled) {
-  background: #2980b9;
+  background: var(--link-hover);
 }
 
 .fetch-controls button:disabled {
@@ -305,14 +316,14 @@ textarea {
 
 .progress-bar {
   height: 6px;
-  background: #eee;
+  background: var(--border-light);
   border-radius: 3px;
   overflow: hidden;
 }
 
 .progress-fill {
   height: 100%;
-  background: #3498db;
+  background: var(--info);
   border-radius: 3px;
   transition: width 0.3s;
 }
@@ -321,6 +332,6 @@ textarea {
   display: block;
   margin-top: 4px;
   font-size: 0.8rem;
-  color: #666;
+  color: var(--text-secondary);
 }
 </style>

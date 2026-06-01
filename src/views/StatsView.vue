@@ -111,6 +111,7 @@ async function handleClear() {
 <style scoped>
 .stats-view {
   height: 100vh;
+  background: var(--bg-page);
 }
 
 .stats-content {
@@ -121,10 +122,12 @@ async function handleClear() {
 
 h2 {
   margin: 0 0 20px;
+  color: var(--text-primary);
 }
 
 h3 {
   margin: 24px 0 12px;
+  color: var(--text-primary);
 }
 
 .history-header {
@@ -139,8 +142,8 @@ h3 {
 
 .clear-btn {
   background: none;
-  border: 1px solid #e74c3c;
-  color: #e74c3c;
+  border: 1px solid var(--danger);
+  color: var(--danger);
   padding: 4px 12px;
   border-radius: 4px;
   cursor: pointer;
@@ -148,7 +151,7 @@ h3 {
 }
 
 .clear-btn:hover {
-  background: #e74c3c;
+  background: var(--danger);
   color: #fff;
 }
 
@@ -159,7 +162,7 @@ h3 {
 }
 
 .stat-card {
-  background: #f5f5f5;
+  background: var(--bg-elevated);
   padding: 16px 24px;
   border-radius: 8px;
   text-align: center;
@@ -169,17 +172,18 @@ h3 {
 .stat-card .label {
   display: block;
   font-size: 0.8rem;
-  color: #888;
+  color: var(--text-tertiary);
   margin-bottom: 4px;
 }
 
 .stat-card .value {
   font-size: 1.5rem;
   font-weight: bold;
+  color: var(--text-primary);
 }
 
 .stat-card .highlight {
-  color: #e67e22;
+  color: var(--accent);
 }
 
 .history-table {
@@ -192,37 +196,38 @@ h3 {
 .history-table td {
   padding: 10px 12px;
   text-align: left;
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid var(--border-light);
+  color: var(--text-primary);
 }
 
 .history-table th {
-  background: #f9f9f9;
+  background: var(--bg-elevated);
   font-weight: 600;
   font-size: 0.85rem;
-  color: #666;
+  color: var(--text-secondary);
 }
 
 .history-table .score {
   font-weight: bold;
-  color: #e67e22;
+  color: var(--accent);
 }
 
 .empty {
-  color: #888;
+  color: var(--text-tertiary);
   padding: 24px 0;
 }
 
 .back-link {
   display: inline-block;
   margin-bottom: 12px;
-  color: #333;
-  background: rgba(0, 0, 0, 0.05);
+  color: var(--text-primary);
+  background: rgba(128, 128, 128, 0.1);
   padding: 8px 16px;
   border-radius: 4px;
   text-decoration: none;
 }
 
 .back-link:hover {
-  background: rgba(0, 0, 0, 0.1);
+  background: rgba(128, 128, 128, 0.18);
 }
 </style>

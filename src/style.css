@@ -4,16 +4,117 @@
   box-sizing: border-box;
 }
 
+/* ── Light Theme (default) ── */
 :root {
+  --bg-page: #f5f7fa;
+  --bg-surface: #ffffff;
+  --bg-elevated: #f9f9f9;
+  --bg-input: #ffffff;
+
+  --text-primary: #1a2a3a;
+  --text-secondary: #555;
+  --text-tertiary: #888;
+
+  --border: #ddd;
+  --border-light: #eee;
+
+  --accent: #e67e22;
+  --accent-hover: #d35400;
+  --accent-glow: rgba(230, 126, 34, 0.35);
+
+  --link: #3498db;
+  --link-hover: #2980b9;
+
+  --success: #27ae60;
+  --danger: #e74c3c;
+  --info: #3498db;
+
+  --shadow: rgba(0, 0, 0, 0.08);
+  --shadow-strong: rgba(0, 0, 0, 0.15);
+
+  /* HomeView */
+  --home-grid: rgba(52, 152, 219, 0.07);
+  --home-muted: rgba(0, 0, 0, 0.08);
+  --home-dot: rgba(52, 152, 219, 0.2);
+  --home-title: #1a2a3a;
+  --home-title-shadow: 0 0 40px rgba(230, 126, 34, 0.15);
+  --home-subtitle: #666;
+  --home-card-bg: rgba(255, 255, 255, 0.7);
+  --home-card-border: rgba(0, 0, 0, 0.08);
+  --home-card-border-hover: rgba(0, 0, 0, 0.15);
+  --home-card-icon: #555;
+  --home-card-title: #1a2a3a;
+  --home-card-desc: #666;
+  --home-card-btn-bg: rgba(0, 0, 0, 0.04);
+  --home-card-btn-border: rgba(0, 0, 0, 0.12);
+  --logo-globe-fill: rgba(52, 152, 219, 0.06);
+  --logo-globe-stroke: rgba(52, 152, 219, 0.3);
+  --logo-globe-line: rgba(52, 152, 219, 0.18);
+  --logo-ring-outer: rgba(0, 0, 0, 0.1);
+  --logo-orbit: rgba(230, 126, 34, 0.2);
+  --logo-tick: rgba(0, 0, 0, 0.12);
+  --home-nav: #555;
+  --home-nav-bg: rgba(0, 0, 0, 0.03);
+  --home-nav-border: rgba(0, 0, 0, 0.1);
+  --home-nav-hover: #1a2a3a;
+  --home-nav-border-hover: rgba(0, 0, 0, 0.2);
+  --home-nav-bg-hover: rgba(0, 0, 0, 0.06);
+
   font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
   line-height: 1.5;
   font-weight: 400;
-  color: #213547;
-  background-color: #ffffff;
+  color: var(--text-primary);
+  background-color: var(--bg-page);
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+/* ── Dark Theme ── */
+[data-theme="dark"] {
+  --bg-page: #0f1923;
+  --bg-surface: #1a2a3a;
+  --bg-elevated: #223344;
+  --bg-input: #1a2a3a;
+
+  --text-primary: #e8e8e8;
+  --text-secondary: #aaa;
+  --text-tertiary: #777;
+
+  --border: #334455;
+  --border-light: #2a3a4a;
+
+  --shadow: rgba(0, 0, 0, 0.3);
+  --shadow-strong: rgba(0, 0, 0, 0.5);
+
+  /* HomeView */
+  --home-grid: rgba(52, 152, 219, 0.06);
+  --home-muted: rgba(255, 255, 255, 0.08);
+  --home-dot: rgba(52, 152, 219, 0.25);
+  --home-title: #ffffff;
+  --home-title-shadow: 0 0 40px rgba(230, 126, 34, 0.35), 0 0 80px rgba(230, 126, 34, 0.12);
+  --home-subtitle: rgba(255, 255, 255, 0.45);
+  --home-card-bg: rgba(255, 255, 255, 0.04);
+  --home-card-border: rgba(255, 255, 255, 0.08);
+  --home-card-border-hover: rgba(255, 255, 255, 0.15);
+  --home-card-icon: rgba(255, 255, 255, 0.6);
+  --home-card-title: #ffffff;
+  --home-card-desc: rgba(255, 255, 255, 0.45);
+  --home-card-btn-bg: rgba(255, 255, 255, 0.06);
+  --home-card-btn-border: rgba(255, 255, 255, 0.15);
+  --logo-globe-fill: rgba(52, 152, 219, 0.08);
+  --logo-globe-stroke: rgba(52, 152, 219, 0.4);
+  --logo-globe-line: rgba(52, 152, 219, 0.25);
+  --logo-ring-outer: rgba(255, 255, 255, 0.08);
+  --logo-orbit: rgba(230, 126, 34, 0.25);
+  --logo-tick: rgba(255, 255, 255, 0.1);
+  --home-nav: rgba(255, 255, 255, 0.6);
+  --home-nav-bg: rgba(255, 255, 255, 0.04);
+  --home-nav-border: rgba(255, 255, 255, 0.1);
+  --home-nav-hover: rgba(255, 255, 255, 0.9);
+  --home-nav-border-hover: rgba(255, 255, 255, 0.2);
+  --home-nav-bg-hover: rgba(255, 255, 255, 0.08);
 }
 
 body {
@@ -35,12 +136,12 @@ input, textarea {
 }
 
 a {
-  color: #3498db;
+  color: var(--link);
   text-decoration: none;
 }
 
 a:hover {
-  color: #2980b9;
+  color: var(--link-hover);
 }
 
 button {

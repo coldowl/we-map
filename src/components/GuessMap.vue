@@ -30,6 +30,8 @@ onMounted(() => {
     zoom: 2,
     minZoom: 2,
     maxZoom: 18,
+    maxBounds: [[-85, -Infinity], [85, Infinity]],
+    maxBoundsViscosity: 1.0,
   })
 
   L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -52,13 +54,16 @@ watch(collapsed, (isCollapsed) => {
 function placeMarker(lat: number, lng: number) {
   if (!map) return
 
+  // 标记显示在原始点击位置（保持用户视角）
   if (marker) {
     marker.setLatLng([lat, lng])
   } else {
     marker = L.marker([lat, lng]).addTo(map)
   }
 
-  emit('guess-placed', lat, lng)
+  // 归一化经度到 -180 ~ 180 用于距离计算
+  const normalizedLng = ((lng + 180) % 360 + 360) % 360 - 180
+  emit('guess-placed', lat, normalizedLng)
 }
 
 function toggleCollapse() {

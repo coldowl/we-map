@@ -61,16 +61,39 @@ const resultMapContainer = ref<HTMLElement | null>(null)
 let map: L.Map | null = null
 let line: L.Polyline | null = null
 
+/** 返回两点间最短路径的经纬度数组（处理经度绕回） */
+function shortestPath(guess: { latitude: number; longitude: number }, actual: { latitude: number; longitude: number }): [number, number][] {
+  let lng1 = guess.longitude
+  let lng2 = actual.longitude
+  const diff = lng2 - lng1
+
+  if (Math.abs(diff) > 180) {
+    // 走反方向更短，将 lng2 调整到同一侧
+    if (diff > 0) {
+      lng2 -= 360
+    } else {
+      lng2 += 360
+    }
+  }
+
+  return [[guess.latitude, lng1], [actual.latitude, lng2]]
+}
+
 onMounted(() => {
   if (!resultMapContainer.value || !props.lastResult) return
 
   const { guess, question } = props.lastResult
 
+  const path = shortestPath(guess, question)
+  const centerLat = (path[0][0] + path[1][0]) / 2
+  const centerLng = (path[0][1] + path[1][1]) / 2
+
   map = L.map(resultMapContainer.value, {
-    center: [(guess.latitude + question.latitude) / 2, (guess.longitude + question.longitude) / 2],
+    center: [centerLat, centerLng],
     zoom: 3,
     minZoom: 2,
     maxZoom: 18,
+    worldCopyJump: false,
   })
 
   L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -88,10 +111,7 @@ onMounted(() => {
   actualMarker.bindPopup('正确位置')
 
   line = L.polyline(
-    [
-      [guess.latitude, guess.longitude],
-      [question.latitude, question.longitude],
-    ],
+    shortestPath(guess, question),
     { color: '#3498db', weight: 2, dashArray: '8 4' }
   ).addTo(map)
 
@@ -123,10 +143,7 @@ watch(
     }).addTo(map).bindPopup('正确位置')
 
     const newLine = L.polyline(
-      [
-        [guess.latitude, guess.longitude],
-        [question.latitude, question.longitude],
-      ],
+      shortestPath(guess, question),
       { color: '#3498db', weight: 2, dashArray: '8 4' }
     ).addTo(map)
 

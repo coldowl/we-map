@@ -24,7 +24,7 @@ const { t } = useI18n()
 <style scoped>
 .settings-view {
   display: flex;
-  height: 100vh;
+  flex: 1;
   background: var(--bg-page);
 }
 

@@ -98,6 +98,10 @@ const messages = {
       fetchNeedToken: '请先在设置中配置 Mapillary 访问令牌',
       fetchProgress: '已收集 {current}/{total} · {region}',
     },
+    titlebar: {
+      pin: '钉住窗口',
+      unpin: '取消钉住',
+    },
   },
   en: {
     app: {
@@ -195,6 +199,10 @@ const messages = {
       fetchFailed: 'Fetch failed: {error}',
       fetchNeedToken: 'Please configure Mapillary access token in settings first',
       fetchProgress: 'Collected {current}/{total} · {region}',
+    },
+    titlebar: {
+      pin: 'Pin Window',
+      unpin: 'Unpin',
     },
   },
 }

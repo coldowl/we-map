@@ -110,7 +110,7 @@ async function handleClear() {
 
 <style scoped>
 .stats-view {
-  height: 100vh;
+  flex: 1;
   background: var(--bg-page);
 }
 

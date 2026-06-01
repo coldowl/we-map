@@ -165,7 +165,7 @@ async function startGame(mode: 'standard' | 'survival') {
 .home {
   position: relative;
   display: flex;
-  height: 100vh;
+  flex: 1;
   overflow: hidden;
   background: var(--bg-page);
 }

@@ -291,8 +291,8 @@ async function handleNewGame() {
 <style scoped>
 .game-view {
   position: relative;
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  flex: 1;
   overflow: hidden;
   outline: none;
 }
